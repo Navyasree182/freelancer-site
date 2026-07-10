@@ -1,261 +1,101 @@
-# ⚡ FreelanceHub – Freelance Marketplace Platform
+Freelance Marketplace Platform
+A full-stack freelance marketplace where clients post projects, freelancers bid on them, and accepted bids turn into contracts — built with Django REST (function-based views) + SQLite on the backend and HTML/CSS/JavaScript (Fetch API) on the frontend.
 
-A full-stack **Freelance Marketplace Platform** built with Django REST APIs and MongoDB (PyMongo) on the backend, and a premium dark-mode HTML/CSS/JS frontend using the Fetch API.
-
----
-
-## 📁 Folder Structure
-
-```
+Folder Structure
 FreelanceMarketplace/
-│── manage.py           ← Django entry point
-│── settings.py         ← Django configuration
-│── wsgi.py
-│── urls.py             ← Root URL conf
-│── marketplace.db      ← (Not used – MongoDB is used)
-│
-│── Backend/
-│   ├── __init__.py
-│   ├── db.py           ← PyMongo connection & helpers
-│   ├── views.py        ← All 20 Function-Based View APIs
-│   └── urls.py         ← All API URL patterns
+├── Backend/
+│   ├── manage.py
+│   ├── requirements.txt
+│   ├── db.sqlite3            (created after migrate)
+│   ├── core/                 Django project (settings, root urls)
+│   │   ├── settings.py
+│   │   ├── urls.py
+│   │   └── wsgi.py
+│   └── api/                  Django app — the three required files:
+│       ├── db.py             ← database schema (models) for all 5 modules
+│       ├── views.py          ← function-based views / 20 CRUD APIs + bonus
+│       ├── urls.py           ← API routing
+│       ├── models.py         (re-exports db.py so Django migrations work)
+│       └── admin.py
 │
 └── Frontend/
-    ├── index.html      ← Home page
-    ├── login.html      ← Login
-    ├── register.html   ← Freelancer & Client registration
-    ├── dashboard.html  ← Admin / User dashboard
-    ├── projects.html   ← Browse & post projects
-    ├── bids.html       ← Submit & manage bids
-    ├── contracts.html  ← Contract management
-    ├── style.css       ← Premium dark-mode CSS
-    └── script.js       ← All Fetch API calls & DOM logic
-```
-
----
-
-## 🚀 Quick Start
-
-### 1. Install dependencies
-
-```bash
-pip install django pymongo
-```
-
-### 2. Configure MongoDB
-
-Open `Backend/db.py` and set your **MongoDB Atlas** connection string:
-
-```python
-MONGO_URI = "mongodb+srv://<username>:<password>@<cluster>.mongodb.net/?retryWrites=true&w=majority"
-```
-
-Or leave the default `mongodb://localhost:27017/` for a local MongoDB instance.
-
-### 3. Start the Django server
-
-```bash
-cd FreelanceMarketplace
+    ├── index.html
+    ├── login.html
+    ├── register.html
+    ├── dashboard.html
+    ├── projects.html
+    ├── bids.html
+    ├── contracts.html
+    ├── style.css
+    └── script.js
+How to Run
+1. Backend (Django REST API)
+cd Backend
+pip install -r requirements.txt
+python manage.py makemigrations api
+python manage.py migrate
 python manage.py runserver
-```
+The API will be live at http://127.0.0.1:8000/. (Optional) create an admin user to browse data at /admin/:
 
-Server runs at **http://127.0.0.1:8000**
+python manage.py createsuperuser
+2. Frontend
+Just open Frontend/index.html directly in your browser (double-click it, or use VS Code's "Live Server" extension). It talks to the backend via fetch() calls to http://127.0.0.1:8000, so keep the Django server running while you use the site.
 
-### 4. Open the frontend
+CORS is fully open (CORS_ALLOW_ALL_ORIGINS = True) in core/settings.py specifically so the frontend can be opened from a different origin (file:// or a different port) during development/grading.
 
-Open `Frontend/index.html` directly in your browser, or serve via VS Code Live Server.
+Login / Session Model
+There's no separate auth table in the schema, so login is a lightweight, practical simulation: registering creates a Freelancer or Client record; logging in looks up that email in the corresponding table and stores the matched profile in localStorage as the active session. This is enough to drive role-based dashboards and to auto-attach freelancer_name / client_name on bids and projects, without inventing an extra module outside the given schema.
 
----
+API Reference (20 required + bonus)
+Module	Method	Endpoint
+Freelancer	POST	/freelancers/add/
+Freelancer	GET	/freelancers/
+Freelancer	PUT	/freelancers/update/<id>/
+Freelancer	DELETE	/freelancers/delete/<id>/
+Client	POST	/clients/add/
+Client	GET	/clients/
+Client	PUT	/clients/update/<id>/
+Client	DELETE	/clients/delete/<id>/
+Project	POST	/projects/add/
+Project	GET	/projects/ (supports ?search=&category=&status=)
+Project	PUT	/projects/update/<id>/
+Project	DELETE	/projects/delete/<id>/
+Bid	POST	/bids/add/
+Bid	GET	/bids/ (supports ?project_title=&freelancer_name=&status=)
+Bid	PUT	/bids/update/<id>/ (also used to Accept/Reject)
+Bid	DELETE	/bids/delete/<id>/
+Contract	POST	/contracts/add/
+Contract	GET	/contracts/ (supports ?freelancer_name=&client_name=)
+Contract	PUT	/contracts/update/<id>/
+Contract	DELETE	/contracts/delete/<id>/
+Bonus	GET	/freelancers/search/?skill=Django
+Bonus	GET	/dashboard/stats/
+All responses follow {"success": true/false, "data": ...}.
 
-## 🔌 API Endpoints (20 total)
+Bonus Features Implemented
+✅ Project Search & Filter (title, category, status)
+✅ Freelancer Skill Search
+✅ Dashboard Statistics (projects, bids, contracts)
+✅ Project Status Tracking (Open → In Progress → Completed, auto-updates when a bid is accepted)
+✅ Profile Image Upload field on the Freelancer model (profile_image, accepts multipart/form-data on /freelancers/add/)
+##outputs
 
-| Module       | Method | Endpoint                        |
-|--------------|--------|---------------------------------|
-| Freelancers  | GET    | `/freelancers/`                 |
-| Freelancers  | POST   | `/freelancers/add/`             |
-| Freelancers  | PUT    | `/freelancers/update/<id>/`     |
-| Freelancers  | DELETE | `/freelancers/delete/<id>/`     |
-| Clients      | GET    | `/clients/`                     |
-| Clients      | POST   | `/clients/add/`                 |
-| Clients      | PUT    | `/clients/update/<id>/`         |
-| Clients      | DELETE | `/clients/delete/<id>/`         |
-| Projects     | GET    | `/projects/`                    |
-| Projects     | POST   | `/projects/add/`                |
-| Projects     | PUT    | `/projects/update/<id>/`        |
-| Projects     | DELETE | `/projects/delete/<id>/`        |
-| Bids         | GET    | `/bids/`                        |
-| Bids         | POST   | `/bids/add/`                    |
-| Bids         | PUT    | `/bids/update/<id>/`            |
-| Bids         | DELETE | `/bids/delete/<id>/`            |
-| Contracts    | GET    | `/contracts/`                   |
-| Contracts    | POST   | `/contracts/add/`               |
-| Contracts    | PUT    | `/contracts/update/<id>/`       |
-| Contracts    | DELETE | `/contracts/delete/<id>/`       |
-| **Stats**    | GET    | `/stats/` *(bonus)*             |
+register page
+image
+login page
+image image ## home page image ### bids page image ### dashboard page image
+Core User Flow (matches Sample Testing Data in the brief)
+A client registers → posts an "E-Commerce Website" project.
+A freelancer registers → browses /projects.html → submits a bid.
+The client opens /bids.html, sees the pending bid, clicks Accept.
+Accepting a bid automatically:
+creates a Contract (/contracts/add/)
+flips the project's status to In Progress
+Both dashboards (/dashboard.html) reflect the new contract, and it can be marked Completed or Cancelled from /contracts.html.
+Postman Testing
+Import the endpoints above into Postman (or use the curl examples in this README) to generate the required API testing screenshots — every endpoint was manually verified with curl during development (create, list, update, filter/search, and delete all confirmed working end-to-end).
 
----
-
-## 📊 Database Schema (MongoDB Collections)
-
-### freelancers
-| Field          | Type   |
-|----------------|--------|
-| freelancer_id  | Number |
-| full_name      | String |
-| email          | String |
-| phone          | String |
-| skills         | String |
-| experience     | Number |
-| hourly_rate    | Number |
-| profile_image  | String |
-
-### clients
-| Field          | Type   |
-|----------------|--------|
-| client_id      | Number |
-| company_name   | String |
-| contact_person | String |
-| email          | String |
-| phone          | String |
-| location       | String |
-
-### projects
-| Field         | Type   |
-|---------------|--------|
-| project_id    | Number |
-| project_title | String |
-| description   | String |
-| category      | String |
-| budget        | Number |
-| deadline      | Date   |
-| client_name   | String |
-| status        | String |
-
-### bids
-| Field           | Type   |
-|-----------------|--------|
-| bid_id          | Number |
-| project_title   | String |
-| freelancer_name | String |
-| bid_amount      | Number |
-| proposal        | String |
-| status          | String |
-
-### contracts
-| Field           | Type   |
-|-----------------|--------|
-| contract_id     | Number |
-| project_title   | String |
-| freelancer_name | String |
-| client_name     | String |
-| agreed_budget   | Number |
-| start_date      | Date   |
-| end_date        | Date   |
-| contract_status | String |
-
----
-
-## ⭐ Bonus Features Implemented
-
-| Feature                           | Marks |
-|-----------------------------------|-------|
-| Project Search & Filter           | ✅ 4  |
-| Freelancer Skill Search           | ✅ 4  |
-| Dashboard Statistics              | ✅ 4  |
-| Profile Image Upload (base64)     | ✅ 4  |
-| Project Status Tracking           | ✅ 4  |
-| **Bonus Total**                   | **20**|
-
----
-
-## 🧪 Sample Test Data (Postman)
-
-### Add Freelancer
-```
-POST http://127.0.0.1:8000/freelancers/add/
-Content-Type: application/json
-
-{
-  "full_name": "Rahul Sharma",
-  "email": "rahul@gmail.com",
-  "phone": "9876543210",
-  "skills": "MERN Stack, Django",
-  "experience": 3,
-  "hourly_rate": 20
-}
-```
-
-### Add Client
-```
-POST http://127.0.0.1:8000/clients/add/
-Content-Type: application/json
-
-{
-  "company_name": "Tech Solutions Pvt Ltd",
-  "contact_person": "Anjali Verma",
-  "email": "client@techsolutions.com",
-  "phone": "9988776655",
-  "location": "Bangalore"
-}
-```
-
-### Post Project
-```
-POST http://127.0.0.1:8000/projects/add/
-Content-Type: application/json
-
-{
-  "project_title": "E-Commerce Website",
-  "description": "Develop a responsive e-commerce platform.",
-  "category": "Web Development",
-  "budget": 50000,
-  "deadline": "2026-08-30",
-  "client_name": "Tech Solutions Pvt Ltd",
-  "status": "Open"
-}
-```
-
-### Submit Bid
-```
-POST http://127.0.0.1:8000/bids/add/
-Content-Type: application/json
-
-{
-  "project_title": "E-Commerce Website",
-  "freelancer_name": "Rahul Sharma",
-  "bid_amount": 45000,
-  "proposal": "I can complete the project in 25 days.",
-  "status": "Pending"
-}
-```
-
-### Create Contract
-```
-POST http://127.0.0.1:8000/contracts/add/
-Content-Type: application/json
-
-{
-  "project_title": "E-Commerce Website",
-  "freelancer_name": "Rahul Sharma",
-  "client_name": "Tech Solutions Pvt Ltd",
-  "agreed_budget": 45000,
-  "start_date": "2026-08-05",
-  "end_date": "2026-08-30",
-  "contract_status": "Active"
-}
-```
-
----
-
-## 🛠 Technology Stack
-
-| Layer     | Technology               |
-|-----------|--------------------------|
-| Frontend  | HTML5, CSS3, JavaScript  |
-| API Calls | Fetch API                |
-| Backend   | Django (FBV)             |
-| Database  | MongoDB Atlas (PyMongo)  |
-
----
-
-*Built for Major Project Examination – Freelance Marketplace Platform*
+Notes for Submission
+Take a screenshot of db.sqlite3 contents via python manage.py shell or the Django admin (/admin/) for the "Database Screenshot" requirement.
+Take Postman screenshots for each of the 20+ endpoints.
+Take frontend screenshots of each page (Home, Register, Login, Projects, Bids, Contracts, Dashboard).
