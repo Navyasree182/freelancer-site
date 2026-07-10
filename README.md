@@ -162,16 +162,21 @@ Import the endpoints above into Postman (or use the curl examples in this README
 
 | Page | Preview |
 |---|---|
-| Register page | *add screenshot* |
-| Login page | *add screenshot* |
-| Home page | *add screenshot* |
-| Bids page | *add screenshot* |
-| Dashboard page | *add screenshot* |
+| Register page | 
+<img width="1116" height="700" alt="image" src="https://github.com/user-attachments/assets/7844ed1c-60c9-4650-b01f-8ad96886f9e8" />
+|
+| Login page | 
+<img width="1913" height="1023" alt="image" src="https://github.com/user-attachments/assets/eb14cb12-79c9-4d7e-97af-ff171fadbe05" />
+|
+| Home page | 
+<img width="1920" height="1020" alt="image" src="https://github.com/user-attachments/assets/457cb800-809d-4ca9-8559-f81b1ffef310" />
+|
+| Bids page | 
+<img width="1920" height="1020" alt="image" src="https://github.com/user-attachments/assets/895af228-d94f-4e8e-acf1-7b1fdee4f74c" />
+|
+| Dashboard page |
+<img width="1920" height="1020" alt="image" src="https://github.com/user-attachments/assets/0af5ed5e-4049-4894-9529-bc3d7f4964df" />
+|
 
 ---
 
-## Notes for Submission
-
-- [ ] Take a screenshot of `db.sqlite3` contents via `python manage.py shell` or the Django admin (`/admin/`) for the "Database Screenshot" requirement.
-- [ ] Take Postman screenshots for each of the 20+ endpoints.
-- [ ] Take frontend screenshots of each page (Home, Register, Login, Projects, Bids, Contracts, Dashboard).
