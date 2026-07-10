@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard – FreelanceHub</title>
+  <meta name="description" content="FreelanceHub admin dashboard — manage freelancers, clients, projects, bids and contracts with live statistics." />
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="nav-logo">⚡ FreelanceHub</div>
+  <div class="nav-links">
+    <a href="/app/">Home</a>
+    <a href="/app/projects/">Projects</a>
+    <a href="/app/bids/">Bids</a>
+    <a href="/app/contracts/">Contracts</a>
+    <a href="/app/dashboard/" class="active">Dashboard</a>
+  </div>
+  <div class="nav-actions">
+    <a href="/app/login/"    class="btn btn-ghost">Login</a>
+    <a href="/app/register/" class="btn btn-primary">Register</a>
+  </div>
+</nav>
+
+<div class="page-wrapper" id="dashboard-page">
+  <div class="page-header">
+    <div class="container">
+      <div class="section-tag">Control Panel</div>
+      <h1 class="page-header-title">📊 Dashboard</h1>
+      <p class="page-header-sub">Live statistics and full management for all platform modules.</p>
+    </div>
+  </div>
+
+  <section class="section">
+    <div class="container">
+
+      <!-- ── Stats Overview (Bonus) ──────────────────────────────────────── -->
+      <div class="stat-grid">
+        <div class="stat-card purple">
+          <div class="stat-icon">🧑‍💻</div>
+          <div class="stat-value" id="ds-freelancers">–</div>
+          <div class="stat-label">Total Freelancers</div>
+        </div>
+        <div class="stat-card gold">
+          <div class="stat-icon">🏢</div>
+          <div class="stat-value" id="ds-clients">–</div>
+          <div class="stat-label">Total Clients</div>
+        </div>
+        <div class="stat-card green">
+          <div class="stat-icon">📋</div>
+          <div class="stat-value" id="ds-projects">–</div>
+          <div class="stat-label">Total Projects</div>
+        </div>
+        <div class="stat-card red">
+          <div class="stat-icon">💼</div>
+          <div class="stat-value" id="ds-bids">–</div>
+          <div class="stat-label">Total Bids</div>
+        </div>
+        <div class="stat-card purple">
+          <div class="stat-icon">📜</div>
+          <div class="stat-value" id="ds-contracts">–</div>
+          <div class="stat-label">Contracts</div>
+        </div>
+        <div class="stat-card green">
+          <div class="stat-icon">🟢</div>
+          <div class="stat-value" id="ds-open">–</div>
+          <div class="stat-label">Open Projects</div>
+        </div>
+        <div class="stat-card gold">
+          <div class="stat-icon">⭐</div>
+          <div class="stat-value" id="ds-active-con">–</div>
+          <div class="stat-label">Active Contracts</div>
+        </div>
+        <div class="stat-card red">
+          <div class="stat-icon">⏳</div>
+          <div class="stat-value" id="ds-pending-bids">–</div>
+          <div class="stat-label">Pending Bids</div>
+        </div>
+      </div>
+
+      <!-- ── Tabs ───────────────────────────────────────────────────────── -->
+      <div class="tabs" style="margin-top:1rem">
+        <button class="tab-btn active" data-tab="tab-freelancers">🧑‍💻 Freelancers</button>
+        <button class="tab-btn"        data-tab="tab-clients">🏢 Clients</button>
+        <button class="tab-btn"        data-tab="tab-proj-dash">📋 Projects</button>
+        <button class="tab-btn"        data-tab="tab-bids-dash">💼 Bids</button>
+        <button class="tab-btn"        data-tab="tab-con-dash">📜 Contracts</button>
+      </div>
+
+      <!-- ── Tab: Freelancers ───────────────────────────────────────────── -->
+      <div class="tab-pane active" id="tab-freelancers">
+
+        <!-- Skill search (bonus) -->
+        <div style="display:flex;gap:1rem;margin-bottom:1.5rem;flex-wrap:wrap">
+          <div class="search-box" style="flex:1">
+            <span class="search-icon">🔍</span>
+            <input type="text" id="skill-search-input" placeholder="Search by skill (e.g. React, Django)…" />
+          </div>
+          <button class="btn btn-primary" id="skill-search-btn">Search by Skill</button>
+        </div>
+
+        <div class="table-wrapper mb-4">
+          <table>
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Skills</th>
+                <th>Experience</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="freelancers-table-body">
+              <tr><td colspan="7" style="text-align:center;padding:1.5rem;color:var(--text-muted)">Loading…</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Update freelancer form -->
+        <div class="form-card">
+          <div class="form-title">✏️ Update Freelancer</div>
+          <div class="form-sub">Enter the Freelancer ID and updated details below.</div>
+          <form id="update-freelancer-form">
+            <div class="form-grid">
+              <div class="form-group">
+                <label for="uf-id">Freelancer ID *</label>
+                <input type="number" id="uf-id" placeholder="1" required />
+              </div>
+              <div class="form-group">
+                <label for="uf-name">Full Name</label>
+                <input type="text" id="uf-name" placeholder="Rahul Sharma" />
+              </div>
+              <div class="form-group">
+                <label for="uf-email">Email</label>
+                <input type="email" id="uf-email" placeholder="rahul@gmail.com" />
+              </div>
+              <div class="form-group">
+                <label for="uf-phone">Phone</label>
+                <input type="tel" id="uf-phone" placeholder="9876543210" />
+              </div>
+              <div class="form-group">
+                <label for="uf-exp">Experience (years)</label>
+                <input type="number" id="uf-exp" placeholder="3" />
+              </div>
+              <div class="form-group">
+                <label for="uf-rate">Hourly Rate (₹)</label>
+                <input type="number" id="uf-rate" placeholder="20" />
+              </div>
+              <div class="form-group full">
+                <label for="uf-skills">Skills (comma-separated)</label>
+                <input type="text" id="uf-skills" placeholder="MERN Stack, Django" />
+              </div>
+            </div>
+            <div class="form-actions">
+              <button type="reset"  class="btn btn-ghost">Clear</button>
+              <button type="submit" class="btn btn-primary">💾 Update Freelancer</button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- ── Tab: Clients ───────────────────────────────────────────────── -->
+      <div class="tab-pane" id="tab-clients">
+        <div class="table-wrapper mb-4">
+          <table>
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Company</th>
+                <th>Contact Person</th>
+                <th>Email</th>
+                <th>Location</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="clients-table-body">
+              <tr><td colspan="6" style="text-align:center;padding:1.5rem;color:var(--text-muted)">Loading…</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Update client form -->
+        <div class="form-card">
+          <div class="form-title">✏️ Update Client</div>
+          <div class="form-sub">Enter the Client ID and updated details below.</div>
+          <form id="update-client-form">
+            <div class="form-grid">
+              <div class="form-group">
+                <label for="uc-id">Client ID *</label>
+                <input type="number" id="uc-id" placeholder="1" required />
+              </div>
+              <div class="form-group">
+                <label for="uc-company">Company Name</label>
+                <input type="text" id="uc-company" placeholder="Tech Solutions Pvt Ltd" />
+              </div>
+              <div class="form-group">
+                <label for="uc-contact">Contact Person</label>
+                <input type="text" id="uc-contact" placeholder="Anjali Verma" />
+              </div>
+              <div class="form-group">
+                <label for="uc-email">Email</label>
+                <input type="email" id="uc-email" placeholder="client@techsolutions.com" />
+              </div>
+              <div class="form-group">
+                <label for="uc-phone">Phone</label>
+                <input type="tel" id="uc-phone" placeholder="9988776655" />
+              </div>
+              <div class="form-group">
+                <label for="uc-location">Location</label>
+                <input type="text" id="uc-location" placeholder="Bangalore" />
+              </div>
+            </div>
+            <div class="form-actions">
+              <button type="reset"  class="btn btn-ghost">Clear</button>
+              <button type="submit" class="btn btn-primary">💾 Update Client</button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- ── Tab: Projects ──────────────────────────────────────────────── -->
+      <div class="tab-pane" id="tab-proj-dash">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem">
+          <h2 style="font-size:1.1rem;font-weight:700">Recent Projects</h2>
+          <a href="/app/projects/" class="btn btn-primary btn-sm">Manage All →</a>
+        </div>
+        <div id="dash-projects-list">
+          <div class="card skeleton" style="height:70px;margin-bottom:.75rem"></div>
+          <div class="card skeleton" style="height:70px;margin-bottom:.75rem"></div>
+          <div class="card skeleton" style="height:70px"></div>
+        </div>
+      </div>
+
+      <!-- ── Tab: Bids ──────────────────────────────────────────────────── -->
+      <div class="tab-pane" id="tab-bids-dash">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem">
+          <h2 style="font-size:1.1rem;font-weight:700">Recent Bids</h2>
+          <a href="/app/bids/" class="btn btn-primary btn-sm">Manage All →</a>
+        </div>
+        <div id="dash-bids-list">
+          <div class="card skeleton" style="height:70px;margin-bottom:.75rem"></div>
+          <div class="card skeleton" style="height:70px;margin-bottom:.75rem"></div>
+          <div class="card skeleton" style="height:70px"></div>
+        </div>
+      </div>
+
+      <!-- ── Tab: Contracts ─────────────────────────────────────────────── -->
+      <div class="tab-pane" id="tab-con-dash">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem">
+          <h2 style="font-size:1.1rem;font-weight:700">Active Contracts</h2>
+          <a href="/app/contracts/" class="btn btn-primary btn-sm">Manage All →</a>
+        </div>
+        <div id="dash-contracts-list">
+          <div class="card skeleton" style="height:70px;margin-bottom:.75rem"></div>
+          <div class="card skeleton" style="height:70px;margin-bottom:.75rem"></div>
+          <div class="card skeleton" style="height:70px"></div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+</div>
+
+<script src="/static/script.js"></script>
+</body>
+</html>

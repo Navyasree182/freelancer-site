@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Register – FreelanceHub</title>
+  <meta name="description" content="Register as a freelancer or client on FreelanceHub and start your journey today." />
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="nav-logo">⚡ FreelanceHub</div>
+  <div class="nav-links">
+    <a href="/app/">Home</a>
+    <a href="/app/projects/">Projects</a>
+    <a href="/app/bids/">Bids</a>
+    <a href="/app/contracts/">Contracts</a>
+    <a href="/app/dashboard/">Dashboard</a>
+  </div>
+  <div class="nav-actions">
+    <a href="/app/login/" class="btn btn-ghost">Login</a>
+  </div>
+</nav>
+
+<div class="page-wrapper" id="register-page">
+  <div class="page-header">
+    <div class="container">
+      <div class="section-tag">Join FreelanceHub</div>
+      <h1 class="page-header-title">Create Your Account</h1>
+      <p class="page-header-sub">Register as a freelancer to find work, or as a client to hire talent.</p>
+    </div>
+  </div>
+
+  <section class="section">
+    <div class="container" style="max-width:720px">
+
+      <!-- Tabs -->
+      <div class="tabs">
+        <button class="tab-btn active" data-tab="freelancer-tab" id="tab-fl">🧑‍💻 Freelancer Registration</button>
+        <button class="tab-btn"        data-tab="client-tab"     id="tab-cl">🏢 Client Registration</button>
+      </div>
+
+      <!-- Freelancer tab -->
+      <div class="tab-pane active" id="freelancer-tab">
+        <div class="form-card">
+          <div class="form-title">Freelancer Profile</div>
+          <div class="form-sub">Build your professional profile and start winning projects.</div>
+
+          <form id="freelancer-form">
+            <div class="form-grid">
+              <div class="form-group">
+                <label for="f-name">Full Name *</label>
+                <input type="text" id="f-name" placeholder="e.g. Rahul Sharma" required />
+              </div>
+              <div class="form-group">
+                <label for="f-email">Email Address *</label>
+                <input type="email" id="f-email" placeholder="rahul@gmail.com" required />
+              </div>
+              <div class="form-group">
+                <label for="f-phone">Phone Number</label>
+                <input type="tel" id="f-phone" placeholder="9876543210" />
+              </div>
+              <div class="form-group">
+                <label for="f-exp">Experience (years) *</label>
+                <input type="number" id="f-exp" placeholder="3" min="0" required />
+              </div>
+              <div class="form-group">
+                <label for="f-rate">Hourly Rate (₹) *</label>
+                <input type="number" id="f-rate" placeholder="20" min="0" required />
+              </div>
+              <div class="form-group">
+                <label for="f-image">Profile Photo (bonus)</label>
+                <input type="file" id="f-image" accept="image/*" />
+              </div>
+              <div class="form-group full">
+                <label for="f-skills">Skills * <small style="color:var(--text-muted)">(comma-separated)</small></label>
+                <input type="text" id="f-skills" placeholder="MERN Stack, Django, Python, UI Design" required />
+              </div>
+            </div>
+
+            <div class="form-actions">
+              <button type="reset"  class="btn btn-ghost">Clear</button>
+              <button type="submit" class="btn btn-primary" id="fl-submit-btn">
+                🚀 Register as Freelancer
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- Client tab -->
+      <div class="tab-pane" id="client-tab">
+        <div class="form-card">
+          <div class="form-title">Client Profile</div>
+          <div class="form-sub">Register your company and start posting projects today.</div>
+
+          <form id="client-form">
+            <div class="form-grid">
+              <div class="form-group">
+                <label for="c-company">Company Name *</label>
+                <input type="text" id="c-company" placeholder="Tech Solutions Pvt Ltd" required />
+              </div>
+              <div class="form-group">
+                <label for="c-contact">Contact Person *</label>
+                <input type="text" id="c-contact" placeholder="Anjali Verma" required />
+              </div>
+              <div class="form-group">
+                <label for="c-email">Email Address *</label>
+                <input type="email" id="c-email" placeholder="client@techsolutions.com" required />
+              </div>
+              <div class="form-group">
+                <label for="c-phone">Phone Number</label>
+                <input type="tel" id="c-phone" placeholder="9988776655" />
+              </div>
+              <div class="form-group full">
+                <label for="c-location">Location</label>
+                <input type="text" id="c-location" placeholder="Bangalore, India" />
+              </div>
+            </div>
+
+            <div class="form-actions">
+              <button type="reset"  class="btn btn-ghost">Clear</button>
+              <button type="submit" class="btn btn-primary" id="cl-submit-btn">
+                🏢 Register as Client
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <p style="text-align:center;color:var(--text-secondary);font-size:.9rem;margin-top:1.5rem">
+        Already have an account? <a href="/app/login/" style="color:var(--purple-400);font-weight:600">Login →</a>
+      </p>
+    </div>
+  </section>
+</div>
+
+<script src="/static/script.js"></script>
+</body>
+</html>

@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Projects – FreelanceHub</title>
+  <meta name="description" content="Browse and post freelance projects. Filter by category, budget and status on FreelanceHub." />
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="nav-logo">⚡ FreelanceHub</div>
+  <div class="nav-links">
+    <a href="/app/">Home</a>
+    <a href="/app/projects/" class="active">Projects</a>
+    <a href="/app/bids/">Bids</a>
+    <a href="/app/contracts/">Contracts</a>
+    <a href="/app/dashboard/">Dashboard</a>
+  </div>
+  <div class="nav-actions">
+    <a href="/app/login/"    class="btn btn-ghost">Login</a>
+    <a href="/app/register/" class="btn btn-primary">Register</a>
+  </div>
+</nav>
+
+<div class="page-wrapper">
+  <div class="page-header">
+    <div class="container">
+      <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem">
+        <div>
+          <div class="section-tag">Browse &amp; Post</div>
+          <h1 class="page-header-title">📋 Projects</h1>
+          <p class="page-header-sub">Discover freelance opportunities or post your own project.</p>
+        </div>
+        <button class="btn btn-primary" onclick="openModal('project-modal')">
+          ➕ Post New Project
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <section class="section">
+    <div class="container">
+
+      <!-- Search & Filter ───────────────────────────────────────────────────── -->
+      <div class="filter-bar">
+        <div class="search-box">
+          <span class="search-icon">🔍</span>
+          <input type="text" id="proj-search" placeholder="Search projects by title or keyword…" />
+        </div>
+        <select class="filter-select" id="proj-category">
+          <option value="">All Categories</option>
+          <option>Web Development</option>
+          <option>Graphic Design</option>
+          <option>Content Writing</option>
+          <option>Digital Marketing</option>
+          <option>Mobile Development</option>
+          <option>Data Science</option>
+          <option>UI/UX Design</option>
+          <option>Video Editing</option>
+        </select>
+        <select class="filter-select" id="proj-status">
+          <option value="">All Statuses</option>
+          <option value="Open">Open</option>
+          <option value="In Progress">In Progress</option>
+          <option value="Completed">Completed</option>
+        </select>
+        <button class="btn btn-ghost" onclick="loadProjects()">🔄 Refresh</button>
+      </div>
+
+      <!-- Projects grid ─────────────────────────────────────────────────────── -->
+      <div class="card-grid" id="projects-grid">
+        <div class="card skeleton" style="height:220px"></div>
+        <div class="card skeleton" style="height:220px"></div>
+        <div class="card skeleton" style="height:220px"></div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ── Modal: Post Project ─────────────────────────────────────────────────── -->
+<div class="modal-overlay" id="project-modal">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title">📋 Post a New Project</div>
+      <button class="modal-close" onclick="closeModal('project-modal')">×</button>
+    </div>
+
+    <form id="post-project-form">
+      <div class="form-grid">
+        <div class="form-group">
+          <label for="proj-title">Project Title *</label>
+          <input type="text" id="proj-title" placeholder="E-Commerce Website" required />
+        </div>
+        <div class="form-group">
+          <label for="proj-client">Client Name *</label>
+          <input type="text" id="proj-client" placeholder="Tech Solutions Pvt Ltd" required />
+        </div>
+        <div class="form-group">
+          <label for="proj-cat">Category *</label>
+          <select id="proj-cat" required>
+            <option value="">Select Category</option>
+            <option>Web Development</option>
+            <option>Graphic Design</option>
+            <option>Content Writing</option>
+            <option>Digital Marketing</option>
+            <option>Mobile Development</option>
+            <option>Data Science</option>
+            <option>UI/UX Design</option>
+            <option>Video Editing</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="proj-budget">Budget (₹) *</label>
+          <input type="number" id="proj-budget" placeholder="50000" min="0" required />
+        </div>
+        <div class="form-group">
+          <label for="proj-deadline">Deadline *</label>
+          <input type="date" id="proj-deadline" required />
+        </div>
+        <div class="form-group">
+          <label for="proj-pstatus">Project Status</label>
+          <select id="proj-pstatus">
+            <option value="Open">Open</option>
+            <option value="In Progress">In Progress</option>
+            <option value="Completed">Completed</option>
+          </select>
+        </div>
+        <div class="form-group full">
+          <label for="proj-desc">Description *</label>
+          <textarea id="proj-desc" rows="4" placeholder="Describe the project requirements, deliverables and timeline…" required></textarea>
+        </div>
+      </div>
+      <div class="form-actions">
+        <button type="button" class="btn btn-ghost" onclick="closeModal('project-modal')">Cancel</button>
+        <button type="submit" class="btn btn-primary">🚀 Post Project</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- ── Modal: Edit Project ─────────────────────────────────────────────────── -->
+<div class="modal-overlay" id="edit-project-modal">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title">✏️ Edit Project</div>
+      <button class="modal-close" onclick="closeModal('edit-project-modal')">×</button>
+    </div>
+    <form id="edit-project-form">
+      <input type="hidden" id="edit-proj-id" />
+      <div class="form-grid">
+        <div class="form-group">
+          <label for="edit-proj-title">Project Title</label>
+          <input type="text" id="edit-proj-title" required />
+        </div>
+        <div class="form-group">
+          <label for="edit-proj-client">Client Name</label>
+          <input type="text" id="edit-proj-client" />
+        </div>
+        <div class="form-group">
+          <label for="edit-proj-cat">Category</label>
+          <select id="edit-proj-cat">
+            <option>Web Development</option>
+            <option>Graphic Design</option>
+            <option>Content Writing</option>
+            <option>Digital Marketing</option>
+            <option>Mobile Development</option>
+            <option>Data Science</option>
+            <option>UI/UX Design</option>
+            <option>Video Editing</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="edit-proj-budget">Budget (₹)</label>
+          <input type="number" id="edit-proj-budget" />
+        </div>
+        <div class="form-group">
+          <label for="edit-proj-deadline">Deadline</label>
+          <input type="date" id="edit-proj-deadline" />
+        </div>
+        <div class="form-group">
+          <label for="edit-proj-status">Status</label>
+          <select id="edit-proj-status">
+            <option>Open</option>
+            <option>In Progress</option>
+            <option>Completed</option>
+          </select>
+        </div>
+        <div class="form-group full">
+          <label for="edit-proj-desc">Description</label>
+          <textarea id="edit-proj-desc" rows="3"></textarea>
+        </div>
+      </div>
+      <div class="form-actions">
+        <button type="button" class="btn btn-ghost" onclick="closeModal('edit-project-modal')">Cancel</button>
+        <button type="submit" class="btn btn-primary">💾 Save Changes</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script src="/static/script.js"></script>
+</body>
+</html>

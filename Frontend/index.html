@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FreelanceHub – Connect. Build. Grow.</title>
+  <meta name="description" content="FreelanceHub is a premium marketplace connecting talented freelancers with innovative clients across web development, design, writing and more." />
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+
+<!-- ── Navigation ─────────────────────────────────────────────────────────── -->
+<nav class="navbar">
+  <div class="nav-logo">⚡ FreelanceHub</div>
+  <div class="nav-links">
+    <a href="/app/" class="active">Home</a>
+    <a href="/app/projects/">Projects</a>
+    <a href="/app/bids/">Bids</a>
+    <a href="/app/contracts/">Contracts</a>
+    <a href="/app/dashboard/">Dashboard</a>
+  </div>
+  <div class="nav-actions">
+    <a href="/app/login/"    class="btn btn-ghost">Login</a>
+    <a href="/app/register/" class="btn btn-primary">Get Started</a>
+  </div>
+</nav>
+
+<!-- ── Hero ───────────────────────────────────────────────────────────────── -->
+<div class="page-wrapper">
+<section class="hero">
+  <div class="hero-bg-grid"></div>
+  <div class="container">
+    <div class="hero-content">
+      <div class="hero-badge">🚀 #1 Freelance Marketplace Platform</div>
+      <h1 class="hero-title">
+        Find World-Class<br><span>Freelance Talent</span><br>Instantly
+      </h1>
+      <p class="hero-sub">
+        Connect with top-tier freelancers across web development, design, content and digital marketing.
+        Post projects, receive bids, and build contracts — all in one place.
+      </p>
+      <div class="hero-btns">
+        <a href="/app/register/" class="btn btn-primary" style="font-size:1rem;padding:.8rem 2rem">
+          🎯 Start Hiring
+        </a>
+        <a href="/app/register/?tab=freelancer" class="btn btn-ghost" style="font-size:1rem;padding:.8rem 2rem">
+          💼 Join as Freelancer
+        </a>
+      </div>
+      <div class="hero-stats">
+        <div class="hero-stat">
+          <strong id="stat-freelancers">500+</strong>
+          <span>Expert Freelancers</span>
+        </div>
+        <div class="hero-stat">
+          <strong id="stat-projects">1.2K+</strong>
+          <span>Projects Posted</span>
+        </div>
+        <div class="hero-stat">
+          <strong id="stat-clients">300+</strong>
+          <span>Happy Clients</span>
+        </div>
+        <div class="hero-stat">
+          <strong id="stat-contracts">800+</strong>
+          <span>Contracts Signed</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Categories ──────────────────────────────────────────────────────────── -->
+<section class="section" style="background:var(--bg-secondary)">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-tag">Browse Categories</div>
+      <h2 class="section-title">Find Talent in Every Domain</h2>
+      <p class="section-sub">From code to creative — discover professionals across all skill sets.</p>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:1rem">
+      <div class="card" style="text-align:center;cursor:pointer" onclick="location.href='projects.html?cat=Web+Development'">
+        <div style="font-size:2rem;margin-bottom:.5rem">💻</div>
+        <div style="font-weight:700;font-size:.9rem">Web Development</div>
+      </div>
+      <div class="card" style="text-align:center;cursor:pointer" onclick="location.href='projects.html?cat=Graphic+Design'">
+        <div style="font-size:2rem;margin-bottom:.5rem">🎨</div>
+        <div style="font-weight:700;font-size:.9rem">Graphic Design</div>
+      </div>
+      <div class="card" style="text-align:center;cursor:pointer" onclick="location.href='projects.html?cat=Content+Writing'">
+        <div style="font-size:2rem;margin-bottom:.5rem">✍️</div>
+        <div style="font-weight:700;font-size:.9rem">Content Writing</div>
+      </div>
+      <div class="card" style="text-align:center;cursor:pointer" onclick="location.href='projects.html?cat=Digital+Marketing'">
+        <div style="font-size:2rem;margin-bottom:.5rem">📈</div>
+        <div style="font-weight:700;font-size:.9rem">Digital Marketing</div>
+      </div>
+      <div class="card" style="text-align:center;cursor:pointer" onclick="location.href='projects.html?cat=Mobile+Development'">
+        <div style="font-size:2rem;margin-bottom:.5rem">📱</div>
+        <div style="font-weight:700;font-size:.9rem">Mobile Apps</div>
+      </div>
+      <div class="card" style="text-align:center;cursor:pointer" onclick="location.href='projects.html?cat=Data+Science'">
+        <div style="font-size:2rem;margin-bottom:.5rem">📊</div>
+        <div style="font-weight:700;font-size:.9rem">Data Science</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Featured Freelancers ────────────────────────────────────────────────── -->
+<section class="section">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-tag">Top Talent</div>
+      <h2 class="section-title">Featured Freelancers</h2>
+      <p class="section-sub">Handpicked professionals ready to bring your vision to life.</p>
+    </div>
+    <div class="card-grid" id="featured-freelancers">
+      <!-- Loaded via script.js -->
+      <div class="card skeleton" style="height:180px"></div>
+      <div class="card skeleton" style="height:180px"></div>
+      <div class="card skeleton" style="height:180px"></div>
+    </div>
+    <div style="text-align:center;margin-top:2rem">
+      <a href="/app/dashboard/" class="btn btn-ghost">View All Freelancers →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ── Featured Projects ───────────────────────────────────────────────────── -->
+<section class="section" style="background:var(--bg-secondary)">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-tag">Live Opportunities</div>
+      <h2 class="section-title">Featured Projects</h2>
+      <p class="section-sub">Browse the latest projects posted by leading companies.</p>
+    </div>
+    <div class="card-grid" id="featured-projects">
+      <div class="card skeleton" style="height:200px"></div>
+      <div class="card skeleton" style="height:200px"></div>
+      <div class="card skeleton" style="height:200px"></div>
+    </div>
+    <div style="text-align:center;margin-top:2rem">
+      <a href="/app/projects/" class="btn btn-primary">Explore All Projects →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ── How it Works ────────────────────────────────────────────────────────── -->
+<section class="section">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-tag">How It Works</div>
+      <h2 class="section-title">Simple. Fast. Effective.</h2>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:2rem">
+      <div style="text-align:center">
+        <div style="width:64px;height:64px;background:var(--grad-primary);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.5rem;margin:0 auto 1rem">1</div>
+        <h3 style="font-weight:700;margin-bottom:.5rem">Register</h3>
+        <p style="color:var(--text-secondary);font-size:.9rem">Sign up as a freelancer or client in minutes.</p>
+      </div>
+      <div style="text-align:center">
+        <div style="width:64px;height:64px;background:var(--grad-gold);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.5rem;margin:0 auto 1rem">2</div>
+        <h3 style="font-weight:700;margin-bottom:.5rem">Post or Bid</h3>
+        <p style="color:var(--text-secondary);font-size:.9rem">Clients post projects. Freelancers submit competitive bids.</p>
+      </div>
+      <div style="text-align:center">
+        <div style="width:64px;height:64px;background:var(--grad-green);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.5rem;margin:0 auto 1rem">3</div>
+        <h3 style="font-weight:700;margin-bottom:.5rem">Contract</h3>
+        <p style="color:var(--text-secondary);font-size:.9rem">Accept the best bid and formalise it with a contract.</p>
+      </div>
+      <div style="text-align:center">
+        <div style="width:64px;height:64px;background:var(--grad-red);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.5rem;margin:0 auto 1rem">4</div>
+        <h3 style="font-weight:700;margin-bottom:.5rem">Deliver</h3>
+        <p style="color:var(--text-secondary);font-size:.9rem">Work gets done. Mark completed. Build your reputation.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Footer ──────────────────────────────────────────────────────────────── -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="nav-logo">⚡ FreelanceHub</div>
+        <p>The premium marketplace connecting world-class freelancers with innovative clients globally.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Platform</h4>
+        <a href="/app/projects/">Browse Projects</a>
+        <a href="/app/dashboard/">Freelancers</a>
+        <a href="/app/bids/">Bids</a>
+        <a href="/app/contracts/">Contracts</a>
+      </div>
+      <div class="footer-col">
+        <h4>Account</h4>
+        <a href="/app/register/">Register</a>
+        <a href="/app/login/">Login</a>
+        <a href="/app/dashboard/">Dashboard</a>
+      </div>
+      <div class="footer-col">
+        <h4>Categories</h4>
+        <a href="/app/projects/">Web Dev</a>
+        <a href="/app/projects/">Design</a>
+        <a href="/app/projects/">Writing</a>
+        <a href="/app/projects/">Marketing</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      © 2026 FreelanceHub. All rights reserved. Built with Django + MongoDB.
+    </div>
+  </div>
+</footer>
+</div>
+
+<script src="/static/script.js"></script>
+</body>
+</html>
